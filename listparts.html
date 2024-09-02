@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>List Parts</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Parts List</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="partsList">
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const response = await fetch('/inventory/part/list');
+            const parts = await response.json();
+            const partsList = document.getElementById('partsList');
+
+            parts.forEach(part => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${part.name}</td><td>${part.description}</td>`;
+                partsList.appendChild(row);
+            });
+        });
+    </script>
+</body>
+</html>
